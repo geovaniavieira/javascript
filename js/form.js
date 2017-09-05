@@ -3,32 +3,44 @@ botaoAdicionar.addEventListener("click",function (event){
     event.preventDefault();
 
     var form = document.querySelector("#form-adiciona");
+    var paciente = obtemPacienteDoFormulario(form);
 
-    
-   var paciente = obtemPacienteDoFormulario(form);
+    var pacienteTr = montaTr(paciente);
 
-var pacienteTr = montaTr(paciente);
+    var erros = validarPaciente(paciente);
+    console.log(erros);
+    if(erros.length > 0){
+     exibeMensagensDeErro(erros);
+        return;
+    }
 
-//adicionando o paciente na tabela.
-    var tabela = document.querySelector("#tabela-pacientes");
+    //adicionando o paciente na tabela.
+        var tabela = document.querySelector("#tabela-pacientes");
 
     tabela.appendChild(pacienteTr);
 
     form.reset();
-
+    var mensagensErro = document.querySelector("#mensagens-erro");
+    ul.innerHTML = ""
 });
-titulo.addEventListener("click", function () {
-    console.log("fui clicado")
-});
+function exibeMensagensDeErro(erros) {
+      var ul = document.querySelector("#mensagens-erro");
+      ul.innerHTML ="";
 
- function obtemPacienteDoFormulario(form) {
+     erros.forEach (function(erro){
+      var li = document.createElement("li");
+      li.textContent = erro;
+       ul.appendChild(li);
+    });
+}
+function obtemPacienteDoFormulario(form) {
 
      var paciente = {
          nome: form.nome.value,
          peso: form.peso.value,
          altura:form.altura.value,
          gordura :form.gordura.value,
-          imc: calculaImc(form.peso.value, form.altura.value)
+         imc: calculaImc(form.peso.value, form.altura.value)
  };
    return paciente;
  }
@@ -50,8 +62,24 @@ function montaTd(dado,classe) {
     td.classList.add(classe);
     return td;
 }
-function validaPaciente(paciente) {
-    if(paciente.altura < 2.0 && paciente.altura>=0){
+function validarPaciente(paciente){
+      var erros =[];
+      if (paciente.nome.length ==0){
+          erros.push("O nome não pode ser em branco");
+      }
+    if(!validaPeso(paciente.peso)) erros.push("peso é inválido");
+    if(!validarAltura(paciente.altura)) erros.push("Altura é inválida!");
 
-    }
+     if(paciente.peso.length == 0) {
+         erros.push("O peso não pode ser em branco");
+     }
+
+         if(paciente.altura.length == 0){
+             erros.push("A altura não pode ser em branco");
+     }
+         if (paciente.gordura.length == 0) {
+             erros.push("A gordura não pode fica em branco");
+
+         }
+    return erros;
 }
