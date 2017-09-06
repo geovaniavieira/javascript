@@ -1,3 +1,9 @@
-var paciente = document.querySelector(".paciente");
+var tabela  = document.querySelector("table");
 
-console.log(paciente);
+tabela.addEventListener("dblclick",function (event) {
+    event.target.parentNode.classList.add("fadeOut");
+
+    setTimeout(function () {
+        event.target.parentNode.remove();
+    },500);
+});

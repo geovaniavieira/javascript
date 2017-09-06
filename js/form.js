@@ -15,17 +15,17 @@ botaoAdicionar.addEventListener("click",function (event){
     }
 
     //adicionando o paciente na tabela.
-        var tabela = document.querySelector("#tabela-pacientes");
+    var tabela = document.querySelector("#tabela-pacientes");
 
     tabela.appendChild(pacienteTr);
 
     form.reset();
     var mensagensErro = document.querySelector("#mensagens-erro");
-    ul.innerHTML = ""
+    mensagensErro.innerHTML = "";
 });
 function exibeMensagensDeErro(erros) {
       var ul = document.querySelector("#mensagens-erro");
-      ul.innerHTML ="";
+      ul.innerHTML = "";
 
      erros.forEach (function(erro){
       var li = document.createElement("li");
@@ -82,4 +82,4 @@ function validarPaciente(paciente){
 
          }
     return erros;
-}
+    }
